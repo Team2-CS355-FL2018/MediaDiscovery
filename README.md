@@ -8,13 +8,23 @@ We are aiming to create a platform for users to discover new book, movie, and mu
 
 #To Do List
 [x] Create Github Organization and Repo
+
 [] make design mock ups for login/signup, profile, and discovery pages
+
 [] design how the recommendation model is going to work
+
 [] create log in/sign up pages
+
 [] create a user database, store user info (look into using Firebase for it, possibly)
+
 [] create a profile page
+
 [] create a discovery page
+
 [] connect movie API (one possible api: themoviedb.orgthemoviedb.org)
+
 [] connect music API (one possible api: https://developer.spotify.com/documentation/web-playback-sdk/)
+
 [] connect book API
+
 [] deploy to the venus server
