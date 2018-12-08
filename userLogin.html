@@ -9,7 +9,7 @@
 	<img src = "Logo1.png">
 	
 	<div class="container">  
-  	<form id="login" action="">
+  	<form id="login">
     	   <h3>Login</h3>
            <fieldset>
       		<input id = "username" placeholder="Username" type="text" tabindex="1" required autofocus>
@@ -39,7 +39,6 @@
 		checkCredentials(user, pass);
 
 		if (isUser == true){
-		    //alert("User Exists");
 		    window.location.href = "mainPage.html";
 		    sessionStorage.setItem("username", user);
 		    sessionStorage.setItem("password", pass);
