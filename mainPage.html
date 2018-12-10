@@ -1,13 +1,13 @@
 <html>
 
     <head>
-	<link rel = "stylesheet" href = "mainPage.css" />
+	<link rel = "stylesheet" href = "style/mainPage.css" />
     </head>
 
     <body>
 
 	<div class = "backImage">
-	     <img src = "Logo1.png">
+	     <img src = "resources/Logo1.png">
 
       <div class="modal" id="modal-name">
 	
@@ -149,7 +149,7 @@
 		    if (myData.results[r].poster_path != null)
 		    	img.src = "https://image.tmdb.org/t/p/w92" + myData.results[r].poster_path;
 		
-		    else img.src = "None.png";
+		    else img.src = "resources/None.png";
 
 		    row.appendChild(img);
 		
@@ -266,7 +266,7 @@
 		if (myData.results[0].profile_path != null){
 		    	img.src = "https://image.tmdb.org/t/p/w185" + myData.results[0].profile_path;
 		}
-		else img.src = "None2.png";
+		else img.src = "resources/None2.png";
 
 		row.appendChild(img);
 		table.appendChild(row);
