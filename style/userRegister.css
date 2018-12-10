@@ -21,22 +21,33 @@ body {
   <!-- background: #4CAF50; -->
 }
 
-.container {
-  max-width: 400px;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-
 .backImage {
   background-image: url("Cinema.jpg");
   background-color: #cccccc;
   height: 100%;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-size: cover;
   position: relative;
+  overflow: auto;
+  z-index:1000;
 }
+
+.container {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: auto;
+display: -ms-flexbox;
+  
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+
+}
+
 
 #register input[type="text"],
 #register input[type="email"],
@@ -51,7 +62,8 @@ body {
 #register {
   background: #F9F9F9;
   padding: 25px;
-  margin: 100px 0;
+  margin-top: 25px;
+  margin-bottom: 25px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 

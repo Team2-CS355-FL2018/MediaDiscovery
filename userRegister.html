@@ -10,7 +10,7 @@
 	<img src = "resources/Logo1.png">
 
 	<div class="container">  
-  	<form id="register">
+  	<form id="register" action = "userChoices.html" onsubmit = "return Check()">
     	    <h3>Create Account</h3>
      	     <fieldset>
       		<input id = "firstName" placeholder="First Name" type="text" required autofocus>
@@ -39,11 +39,15 @@
 	</div>
 
      <script>
+	var check;
 	var isUserUnique;
 	var isEmailUnique;
+	var fields = ["firstName", "lastName", "emailaddress", "username", "pass", "Confirmation"];
 	
 	function createAccount(){
-	     var check = true;
+	     check = true;
+
+	     var test = checkEmptyStrings();
 	
 	     var firstName = document.getElementById("firstName").value;
 	     var lastName = document.getElementById("lastName").value;
@@ -74,7 +78,14 @@
 		emptyPasswords();
 	     }
 
+	     if (test == false){
+		alert("Please Fill Out All Fields");
+		emptyPasswords();
+		check = false;
+	     }
+
 	     if (check == true) {
+		sessionStorage.setItem("username", username);
 	     	addAccount(firstName, lastName, emailAddress, username, password, passwordC);
 		alert("Account Created Successfully!");
 	     }
@@ -132,6 +143,23 @@
 	function emptyPasswords(){
 	     document.getElementById("pass").value = "";
 	     document.getElementById("Confirmation").value = "";
+	}
+
+	function Check(){
+	    return check;
+	}
+
+	function checkEmptyStrings(){
+	     var test = true;
+
+	     if (document.getElementById("firstName").value == "") return false;
+	     if (document.getElementById("lastName").value == "") return false;
+	     if (document.getElementById("emailaddress").value == "") return false;
+	     if (document.getElementById("username").value == "") return false;
+	     if (document.getElementById("pass").value == "") return false;;
+	     if (document.getElementById("Confirmation").value == "") return false;
+
+	     return true;
 	}
 
 	function addAccount(firstName, lastName, emailAddress, username, password, passwordC){
