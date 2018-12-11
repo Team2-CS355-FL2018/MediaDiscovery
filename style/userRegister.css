@@ -1,3 +1,68 @@
+#nav_bar{
+  padding:0px;
+  position:block;
+  top: 0;
+  width: 100%;
+  background: #313131;
+  height: 94px;
+
+}
+
+
+#nav_bar ul {
+
+  display:inline-block;
+  position:absolute;
+  width:100%;
+  height: 94px;
+  margin:0px;
+  padding:0px;
+  
+}
+
+#icon {
+  
+  display:inline;
+  width:435px;
+  margin: 0px;
+
+}
+
+#nav_bar  ul li {
+
+  position:static;
+  display:inline-block;
+  
+  width:10%;
+  height:94px;
+   -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+#nav_bar  ul li:hover{
+
+  background-color:#4CAF50;
+}
+
+
+#nav_bar ul a {
+
+  font:serif;
+  text-decoration: none;
+  position:absolute;
+  font-size: 30px;
+  color:black;
+  width:10%;
+  height:94px;
+  text-align:center;
+  padding-top:20px;
+  margin-left:0px;
+
+}
+
+
+
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
 * {
   margin: 0;
@@ -22,7 +87,7 @@ body {
 }
 
 .backImage {
-  background-image: url("Cinema.jpg");
+  background-image: url("../resources/Cinema.jpg");
   background-color: #cccccc;
   height: 100%;
   background-position: center;

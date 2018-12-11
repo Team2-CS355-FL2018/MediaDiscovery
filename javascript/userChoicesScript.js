@@ -1,0 +1,200 @@
+ var myData;
+	    var myData2;
+	    displayTopRatedMovies();
+	    displayTopRatedShows();
+	    var pickedNumber;
+	    
+	    var itemID;
+	    function displayTopRatedMovies(){
+		requestTopRatedMovies();
+		document.getElementById("banner1").innerHTML = "Top Rated Movies";
+		for (var i = 0; i < 9; i++){
+		     var gridItem = document.getElementById("mItem" + i);
+	             
+		     var img = document.createElement('img');
+		     img.id = "mimg" + i;
+		     img.title = myData.results[i].title;
+		     img.onclick = function(){
+			handleGrid(this.id);
+			itemID = this.id
+		     }
+		     if (myData.results[i].poster_path != null)
+		    	img.src = "https://image.tmdb.org/t/p/w92" + myData.results[i].poster_path;
+		
+		     else img.src = "None.png";
+		     var title = myData.results[i].title;
+		     gridItem.appendChild(img);
+		     
+		}
+	    }
+	    function displayTopRatedShows(){
+		requestTopRatedShows();
+		document.getElementById("banner2").innerHTML = "Top Rated Shows";
+		
+		for (var i = 0; i < 9; i++){
+		     var gridItem = document.getElementById("sItem" + i);
+		     var img = document.createElement('img');
+		     img.id = "simg" + i;
+		     img.title = myData2.results[i].name;
+		
+		     img.onclick = function(){
+			handleGrid(this.id);
+			itemID = this.id
+		     }
+		
+		     if (myData.results[i].poster_path != null)
+		    	img.src = "https://image.tmdb.org/t/p/w92" + myData2.results[i].poster_path;
+		
+		     else img.src = "None.png";
+		     var name = myData2.results[i].name;	
+		     gridItem.appendChild(img);
+		     
+		}
+	    }
+	    function requestTopRatedMovies(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200){
+			var myArray = this.responseText;
+			myData = JSON.parse(myArray);
+		    }
+		};
+		xhttp.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=dd22d79895a99a359091ab7ceb24287d&language=en-US&page=1", false);
+		xhttp.send();
+	    }
+	    function requestTopRatedShows(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200){
+			var myArray = this.responseText;
+			myData2 = JSON.parse(myArray);
+		    }
+		};
+		xhttp.open("GET", "https://api.themoviedb.org/3/tv/top_rated?api_key=dd22d79895a99a359091ab7ceb24287d&language=en-US&page=1", false);
+		xhttp.send();
+	    }
+	    function addToList(userName, msID, msName, msYear, msOverview, msRating){
+		
+		mode = "addList";
+		var xhttp = new XMLHttpRequest();
+		var url = "Users.php";
+		var params = "mode=" + mode + "&u=" + userName + "&msID=" + msID + "&msN=" + msName + "&msY=" + msYear + "&msO=" + msOverview + "&msR=" + msRating;
+		xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200){
+			
+		    }
+		};
+		xhttp.open("POST", url, false);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	    	xhttp.send(params);
+	    }
+	    function goToMainPage(){
+		window.location.href = "PlaylistMaker.html";
+	    }
+	    function handleCheckedRating(id){
+		var button = document.getElementById(id);
+		pickedNumber = id.substring(2,3);
+		var otherIDs = id.substring(0, 2);
+		for (var i = 0; i <= pickedNumber; i++){
+		    document.getElementById(otherIDs + i).style.backgroundColor = "yellow";
+		}
+	    }
+	    function handleGrid(id){
+		
+		var itemNumber = id.substring(4,5);
+		var item;
+		
+		var clickedImage = document.getElementById(id);
+		var Identifier = id.substring(0,1);
+		if (Identifier == "s"){
+		    item = document.getElementById("sItem" + itemNumber);
+		    clickedImage.id = "mclicked" + itemNumber;
+		}
+		
+		if (Identifier == "m"){
+		    item = document.getElementById("mItem" + itemNumber);
+		    clickedImage.id = "sclicked" + itemNumber;
+		}
+		item.removeChild(clickedImage);
+		for (var i = 0; i < 10; i++){
+		    var button = document.createElement("INPUT");
+		    button.id = "b" + itemNumber + i;
+		    button.className = "ratings";
+		    button.type = "button";
+		    
+		    button.value = i + 1;
+		    button.style.backgroundColor = "white";
+		    item.append(button);
+		    button.onclick = function(){
+			var otherIDs = button.id.substring(0, 2);
+			for (var i = 0; i < 10; i++){
+		    	    document.getElementById(otherIDs + i).style.backgroundColor = "white";
+			}
+	
+		    	handleCheckedRating(this.id);
+		    }
+		}
+		var buttonID = document.getElementById("sb" + Identifier + itemNumber);
+		if (buttonID == null){ 
+		    var submitButton = document.createElement("INPUT");
+		    submitButton.id = "sb" + Identifier + itemNumber;
+		    submitButton.className = "submit";
+		    submitButton.type = "button";
+		    submitButton.value = "Add To List";
+		    item.appendChild(submitButton);
+		    var cancelButton = document.createElement("INPUT");
+		    cancelButton.id = "cb" + Identifier + itemNumber;
+		    cancelButton.className = "cancel";
+		    cancelButton.type = "button";
+		    cancelButton.value = "Cancel";
+		    item.appendChild(cancelButton);
+		}
+		submitButton.onclick = function() {
+		    console.log(itemID);
+		    if (Identifier == "m"){
+		        var myID = itemID.substring(8,9);
+		   
+		        var userName = sessionStorage.getItem("username");
+		        var msID = myData.results[myID].id;
+			var msName = myData.results[myID].title;
+		    		    
+			var msYear = myData.results[myID].release_date;
+		   	var msOverview = myData.results[myID].overview;
+		    	var msRating = Number(pickedNumber) + 1;
+		    }
+	  	    if (Identifier == "s"){
+		        var myID = itemID.substring(8,9);
+		   
+		        var userName = sessionStorage.getItem("username");
+		        var msID = myData2.results[myID].id;
+			var msName = myData2.results[myID].name;
+		    		    
+			var msYear = myData2.results[myID].first_air_date;
+		   	var msOverview = myData2.results[myID].overview;
+		    	var msRating = Number(pickedNumber) + 1;
+		    }
+		    
+		    addToList(userName, msID, msName, msYear, msOverview, msRating);
+		    if (Identifier == "m") clickedImage.id = "mimg" + itemNumber;
+		    if (Identifier == "s") clickedImage.id = "simg" + itemNumber;
+		    for (var i = 0; i < 10; i++){
+			item.removeChild(document.getElementById("b" + itemNumber + i));
+		    }
+		    item.removeChild(submitButton);
+		    item.removeChild(cancelButton);
+		    item.appendChild(clickedImage);
+		}
+	
+		cancelButton.onclick = function() {
+		    
+		    if (Identifier == "m") clickedImage.id = "mimg" + itemNumber;
+		    if (Identifier == "s") clickedImage.id = "simg" + itemNumber;
+		    for (var i = 0; i < 10; i++){
+			item.removeChild(document.getElementById("b" + itemNumber + i));
+		    }
+		    item.removeChild(submitButton);
+		    item.removeChild(cancelButton);
+		    item.appendChild(clickedImage);
+		}
+		
+	    }
