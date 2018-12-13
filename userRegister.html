@@ -1,186 +1,186 @@
 <html>
 
-    <head>
+<head>
 	<link rel = "stylesheet" href = "style/userRegister.css" />
-    </head>
+</head>
 
-    <body>
+<body>
 	<div class = "backImage">
-	
-	<img src = "resources/Logo1.png">
+		
+		<img src = "resources/Logo1.png">
 
-	<div class="container">  
-  	<form id="register" action = "userChoices.html" onsubmit = "return Check()">
-    	    <h3>Create Account</h3>
-     	     <fieldset>
-      		<input id = "firstName" placeholder="First Name" type="text" required autofocus>
-    	     </fieldset>
-    	     <fieldset>
-     		 <input id = "lastName" placeholder="Last Name" type="text" required autofocus>
-    	     </fieldset>
-    	     <fieldset>
-      		<input id = "emailaddress" placeholder="Your Email Address" type="text" required>
-    	     </fieldset>
-   	     <fieldset>
-      		<input id = "username" placeholder="Username" type="text" required>
-    	     </fieldset>
-    	     <fieldset>
-      		<input id = "pass" placeholder="Password" type="password" required>
-    	     </fieldset>
-    	     <fieldset>
-      		<input id = "Confirmation" placeholder="Confirm Password" type="password" required>
-    	     </fieldset>    
-    	     <fieldset>
-      		<button id = "registerButton" type = "submit" onClick = "createAccount()" >Submit</button>
-    	     </fieldset>
-	     <center> <a href = "PlaylistMaker.html"> Return To Login </a> </center>
-  	</form>
+		<div class="container">  
+			<form id="register" action = "userChoices.html" onsubmit = "return Check()">
+				<h3>Create Account</h3>
+				<fieldset>
+					<input id = "firstName" placeholder="First Name" type="text" required autofocus>
+				</fieldset>
+				<fieldset>
+					<input id = "lastName" placeholder="Last Name" type="text" required autofocus>
+				</fieldset>
+				<fieldset>
+					<input id = "emailaddress" placeholder="Your Email Address" type="text" required>
+				</fieldset>
+				<fieldset>
+					<input id = "username" placeholder="Username" type="text" required>
+				</fieldset>
+				<fieldset>
+					<input id = "pass" placeholder="Password" type="password" required>
+				</fieldset>
+				<fieldset>
+					<input id = "Confirmation" placeholder="Confirm Password" type="password" required>
+				</fieldset>    
+				<fieldset>
+					<button id = "registerButton" type = "submit" onClick = "createAccount()" >Submit</button>
+				</fieldset>
+				<center> <a href = "PlaylistMaker.html"> Return To Login </a> </center>
+			</form>
+		</div>
 	</div>
-	</div>
 
-     <script>
-	var check;
-	var isUserUnique;
-	var isEmailUnique;
-	var fields = ["firstName", "lastName", "emailaddress", "username", "pass", "Confirmation"];
-	
-	function createAccount(){
-	     check = true;
+	<script>
+		var check;
+		var isUserUnique;
+		var isEmailUnique;
+		var fields = ["firstName", "lastName", "emailaddress", "username", "pass", "Confirmation"];
+		
+		function createAccount(){
+			check = true;
 
-	     var test = checkEmptyStrings();
-	
-	     var firstName = document.getElementById("firstName").value;
-	     var lastName = document.getElementById("lastName").value;
-	     var emailAddress = document.getElementById("emailaddress").value;
-	     var username = document.getElementById("username").value;
-	     var password = document.getElementById("pass").value;
-	     var passwordC = document.getElementById("Confirmation").value;
+			var test = checkEmptyStrings();
+			
+			var firstName = document.getElementById("firstName").value;
+			var lastName = document.getElementById("lastName").value;
+			var emailAddress = document.getElementById("emailaddress").value;
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("pass").value;
+			var passwordC = document.getElementById("Confirmation").value;
 
-	     checkUserNameUniqueness(username);
-	     checkEmailUniqueness(emailAddress);
-	
-	     if (password != passwordC){
-		alert("Passwords don't match");
-		emptyPasswords();
-		check = false;
-	     }
-	     if (isUserUnique == false){
-		alert("Username Already Exists");
-		document.getElementById("username").value = "";
-		check = false;
-		emptyPasswords();
-	     }
-
-	     if (isEmailUnique == false){
-		alert("Email Already Exists");
-		document.getElementById("emailaddress").value = "";
-		check = false;
-		emptyPasswords();
-	     }
-
-	     if (test == false){
-		alert("Please Fill Out All Fields");
-		emptyPasswords();
-		check = false;
-	     }
-
-	     if (check == true) {
-		sessionStorage.setItem("username", username);
-	     	addAccount(firstName, lastName, emailAddress, username, password, passwordC);
-		alert("Account Created Successfully!");
-	     }
-	}
-
-	function checkUserNameUniqueness(username){
-	    mode = "checkUser";
-
-	    var xhttp = new XMLHttpRequest();
-	    var url = "Users.php";
-	    var params = "mode=" + mode + "&u=" + username;
-
-	    xhttp.onreadystatechange = function() {
-	     	if (this.readyState == 4 && this.status == 200){
-		     var String1 = "NO";
-
-			var result = String1.localeCompare(this.responseText);
-			console.log(result);
-			if (result == 0){
-			    isUserUnique = false;
+			checkUserNameUniqueness(username);
+			checkEmailUniqueness(emailAddress);
+			
+			if (password != passwordC){
+				alert("Passwords don't match");
+				emptyPasswords();
+				check = false;
 			}
-			else isUserUnique = true;
-	        }
-	    };
-
-	    xhttp.open("POST", url, false);
-	    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	    xhttp.send(params);
-	}
-
-	function checkEmailUniqueness(emailAddress){
-	    mode = "checkEmail";
-
-	    var xhttp = new XMLHttpRequest();
-	    var url = "Users.php";
-	    var params = "mode=" + mode + "&e=" + emailAddress;
-
-	    xhttp.onreadystatechange = function() {
-	     	if (this.readyState == 4 && this.status == 200){
-		     var String1 = "NO";
-
-			var result = String1.localeCompare(this.responseText);
-			if (result == 0){
-			    isEmailUnique = false;
+			if (isUserUnique == false){
+				alert("Username Already Exists");
+				document.getElementById("username").value = "";
+				check = false;
+				emptyPasswords();
 			}
-			else isEmailUnique = true;
-	        }
-	    };
 
-	    xhttp.open("POST", url, false);
-	    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	    xhttp.send(params);
-	}
+			if (isEmailUnique == false){
+				alert("Email Already Exists");
+				document.getElementById("emailaddress").value = "";
+				check = false;
+				emptyPasswords();
+			}
 
-	function emptyPasswords(){
-	     document.getElementById("pass").value = "";
-	     document.getElementById("Confirmation").value = "";
-	}
+			if (test == false){
+				alert("Please Fill Out All Fields");
+				emptyPasswords();
+				check = false;
+			}
 
-	function Check(){
-	    return check;
-	}
+			if (check == true) {
+				sessionStorage.setItem("username", username);
+				addAccount(firstName, lastName, emailAddress, username, password, passwordC);
+				alert("Account Created Successfully!");
+			}
+		}
 
-	function checkEmptyStrings(){
-	     var test = true;
+		function checkUserNameUniqueness(username){
+			mode = "checkUser";
 
-	     if (document.getElementById("firstName").value == "") return false;
-	     if (document.getElementById("lastName").value == "") return false;
-	     if (document.getElementById("emailaddress").value == "") return false;
-	     if (document.getElementById("username").value == "") return false;
-	     if (document.getElementById("pass").value == "") return false;;
-	     if (document.getElementById("Confirmation").value == "") return false;
+			var xhttp = new XMLHttpRequest();
+			var url = "Users.php";
+			var params = "mode=" + mode + "&u=" + username;
 
-	     return true;
-	}
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200){
+					var String1 = "NO";
 
-	function addAccount(firstName, lastName, emailAddress, username, password, passwordC){
-	    mode = "add";
+					var result = String1.localeCompare(this.responseText);
+					console.log(result);
+					if (result == 0){
+						isUserUnique = false;
+					}
+					else isUserUnique = true;
+				}
+			};
 
-	    var xhttp = new XMLHttpRequest();
-	    var url = "Users.php";
-	    var params = "mode=" + mode + "&f=" + firstName + "&l=" + lastName + "&e=" + emailAddress + "&u=" + username + "&p=" + password + "&pC" + passwordC;
+			xhttp.open("POST", url, false);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(params);
+		}
 
-	    xhttp.onreadystatechange = function() {
-	     	if (this.readyState == 4 && this.status == 200){
+		function checkEmailUniqueness(emailAddress){
+			mode = "checkEmail";
+
+			var xhttp = new XMLHttpRequest();
+			var url = "Users.php";
+			var params = "mode=" + mode + "&e=" + emailAddress;
+
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200){
+					var String1 = "NO";
+
+					var result = String1.localeCompare(this.responseText);
+					if (result == 0){
+						isEmailUnique = false;
+					}
+					else isEmailUnique = true;
+				}
+			};
+
+			xhttp.open("POST", url, false);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(params);
+		}
+
+		function emptyPasswords(){
+			document.getElementById("pass").value = "";
+			document.getElementById("Confirmation").value = "";
+		}
+
+		function Check(){
+			return check;
+		}
+
+		function checkEmptyStrings(){
+			var test = true;
+
+			if (document.getElementById("firstName").value == "") return false;
+			if (document.getElementById("lastName").value == "") return false;
+			if (document.getElementById("emailaddress").value == "") return false;
+			if (document.getElementById("username").value == "") return false;
+			if (document.getElementById("pass").value == "") return false;;
+			if (document.getElementById("Confirmation").value == "") return false;
+
+			return true;
+		}
+
+		function addAccount(firstName, lastName, emailAddress, username, password, passwordC){
+			mode = "add";
+
+			var xhttp = new XMLHttpRequest();
+			var url = "Users.php";
+			var params = "mode=" + mode + "&f=" + firstName + "&l=" + lastName + "&e=" + emailAddress + "&u=" + username + "&p=" + password + "&pC" + passwordC;
+
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200){
 		     //Do Nothing
-	        }
-	    };
+		 }
+		};
 
-	    xhttp.open("POST", url, false);
-	    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	    xhttp.send(params);   
+		xhttp.open("POST", url, false);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(params);   
 
 	}
-     </script>
+</script>
 
-    </body>
+</body>
 </html>
