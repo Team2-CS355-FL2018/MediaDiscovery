@@ -4,7 +4,7 @@ Final group project for Internet and Web Technologies (CS355) class at Queens Co
 
 # Description
 
-We are aiming to create a platform for users to discover new book, movie, and music recommendations based on their and their friends preference history. 
+We are aiming to create a platform for users to discover movies through recommendations based on their and their friends preference history. 
 
 # To Do List
 - [x] Create Github Organization and Repo
