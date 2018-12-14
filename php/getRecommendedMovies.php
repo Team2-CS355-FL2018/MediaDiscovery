@@ -1,6 +1,6 @@
 <?php
 
-   	   $conn = new PDO('mysql:dbname=yoes9965;host=mars.cs.qc.cuny.edu','yoes9965','23299965');
+   	   $conn = new PDO();
 
 
 	   $rec_movies = array();
