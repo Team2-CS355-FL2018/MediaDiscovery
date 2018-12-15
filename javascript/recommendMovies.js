@@ -25,7 +25,7 @@ function loadTable(movies) {
 function getMovies(){
 
 	var url = "php/getRecommendedMovies.php";
-	var params = sessionStorage.getItem("username");	
+	var params = "user=" + sessionStorage.getItem("username");	
 	console.log(params);
 	executeAjax(params, url);
 }
@@ -48,6 +48,7 @@ function executeAjax(params, url) {
 		}else{
 			console.log(this.responseText);
 		}
+
 	}
 
 }

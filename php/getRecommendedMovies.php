@@ -1,9 +1,13 @@
 <?php
+
 	  $conn = new PDO("mysql:dbname=yoes9965;host=127.0.0.1","yoes9965","23299965");
 	
 	//username of the logged in user
 	//comparison will be made based on this name
 	$main_user = $_POST['user'];
+	if(empty($_POST['user'])){
+			echo "fuck";
+	}
 	//$_POST['user'];
 
 	//getting all the favorite movies of the main user and creating array
