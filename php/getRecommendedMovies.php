@@ -1,13 +1,14 @@
 <?php
 
-	  $conn = new PDO("mysql:dbname=yoes9965;host=127.0.0.1","yoes9965","23299965");
+	 $threshold_low = 0;
+	 $threshold_high = 95;
+
+	 $conn = new PDO("mysql:dbname=yoes9965;host=127.0.0.1","yoes9965","23299965");
 	
 	//username of the logged in user
 	//comparison will be made based on this name
 	$main_user = $_POST['user'];
-	if(empty($_POST['user'])){
-			echo "fuck";
-	}
+	
 	//$_POST['user'];
 
 	//getting all the favorite movies of the main user and creating array
@@ -56,7 +57,7 @@
 
 		$nearest_users = array();
 
-		if( ($like_main > 0 and $like_main < 95) and ($like_other > 0 and $like_other < 95)) {
+		if( ($like_main > $threshold_low and $like_main < $threshold_high) and ($like_other > $threshold_low and $like_other < $threshold_high)) {
 			array_push($nearest_users, $users[$i]);
 		}
 	}
