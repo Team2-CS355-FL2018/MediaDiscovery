@@ -21,7 +21,7 @@
 		     if (myData.results[i].poster_path != null)
 		    	img.src = "https://image.tmdb.org/t/p/w92" + myData.results[i].poster_path;
 		
-		     else img.src = "None.png";
+		     else img.src = "resources/None.png";
 		     var title = myData.results[i].title;
 		     gridItem.appendChild(img);
 		     
