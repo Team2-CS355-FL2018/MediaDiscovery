@@ -976,9 +976,7 @@ legend {
 /*=====  End of Choices  ======*/
 
 
-* {
-  box-sizing: border-box;
-}
+
 
 .s003 {
   height: 100%;
@@ -1211,11 +1209,12 @@ legend {
 #nav_bar{
   
   padding:0px;
-  position:block;
+  position:fixed;
   top: 0;
   width: 100%;
   background: #313131;
   height: 94px;
+  z-index: 10;
 
 }
 

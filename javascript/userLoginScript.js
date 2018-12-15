@@ -24,7 +24,7 @@
 		mode = "login";
 		
 		var xhttp = new XMLHttpRequest();
-		var url = "Users.php";
+		var url = "php/Users.php";
 		var params = "mode=" + mode + "&u=" + user + "&p=" + pass;
 		xhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200){
@@ -33,7 +33,13 @@
 			if (result == 0){
 			    isUser = true;
 			}
-			else isUser = false;
+			else{
+				isUser = false;
+				
+			} 
+
+		    }else{
+		    	console.log(this.responseText);	
 		    }
 		};
 		xhttp.open("POST", url, false);

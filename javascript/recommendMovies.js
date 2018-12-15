@@ -24,9 +24,9 @@ function loadTable(movies) {
 
 function getMovies(){
 
-	var url = "getRecommendedMovies.php";
+	var url = "php/getRecommendedMovies.php";
 	var params = sessionStorage.getItem("username");	
-	
+	console.log(params);
 	executeAjax(params, url);
 }
 
@@ -41,9 +41,12 @@ function executeAjax(params, url) {
 	xmlhttp.onreadystatechange = function () {
 		if(this.readyState == 4 && this.status == 200){
 
+			console.log(this.responseText);
 			var movies = JSON.parse(this.responseText);
 			loadTable(movies);	
 			
+		}else{
+			console.log(this.responseText);
 		}
 	}
 

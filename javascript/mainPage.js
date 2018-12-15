@@ -308,7 +308,7 @@
 		mode = "addList";
 
 		var xhttp = new XMLHttpRequest();
-		var url = "Users.php";
+		var url = "php/Users.php";
 		var params = "mode=" + mode + "&u=" + userName + "&msID=" + msID + "&msN=" + msName + "&msY=" + msYear + "&msO=" + msOverview + "&msR=" + msRating;
 		xhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200){

@@ -54,7 +54,7 @@
 	    mode = "checkUser";
 
 	    var xhttp = new XMLHttpRequest();
-	    var url = "Users.php";
+	    var url = "php/Users.php";
 	    var params = "mode=" + mode + "&u=" + username;
 
 	    xhttp.onreadystatechange = function() {
@@ -79,7 +79,7 @@
 	    mode = "checkEmail";
 
 	    var xhttp = new XMLHttpRequest();
-	    var url = "Users.php";
+	    var url = "php/Users.php";
 	    var params = "mode=" + mode + "&e=" + emailAddress;
 
 	    xhttp.onreadystatechange = function() {
@@ -125,7 +125,7 @@
 	    mode = "add";
 
 	    var xhttp = new XMLHttpRequest();
-	    var url = "Users.php";
+	    var url = "php/Users.php";
 	    var params = "mode=" + mode + "&f=" + firstName + "&l=" + lastName + "&e=" + emailAddress + "&u=" + username + "&p=" + password + "&pC" + passwordC;
 
 	    xhttp.onreadystatechange = function() {
