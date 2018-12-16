@@ -1,9 +1,19 @@
 var movieRecommendations = [];
 var topMovieDetails = [];
-var imgOnClick = function(img) {
+var imgOnClick = function() {
+
 	displayRatingOptions(this);
-	this.removeEventListener("click",imgOnClick,true);
+	
 };
+
+var cancelOnClick = function(){
+		
+		var tdBody = this.parentElement;
+		tdBody.removeChild(tdBody.childNodes[1]);
+		tdBody.removeChild(tdBody.childNodes[1]);
+		var img = tdBody.childNodes[0];
+		img.addEventListener("click", imgOnClick); 
+	};
 
 
 window.onload = function (img) {
@@ -16,13 +26,7 @@ window.onload = function (img) {
 function loadTable() {
 	
 	
-
-	for(var i = 0; i < topMovieDetails.results.length ; i++){
-		
-
-		movieRecommendations.push(topMovieDetails.results[i]);
-	}
-
+	console.log(movieRecommendations);
 	var table = document.getElementById("table");
 		
 	for(var i = 0; i < movieRecommendations.length; i++) {
@@ -38,7 +42,7 @@ function loadTable() {
 		 var tdBody = document.createElement('div');
 		 tdBody.className ="tdBody";
 		 var img = document.createElement('img');
-		 imgOnClick = img.addEventListener("click", imgOnClick); 
+		 img.addEventListener("click", imgOnClick); 
 		 img.id = i;
 		 
 		 if (movieRecommendations[i].poster_path != null)
@@ -60,21 +64,25 @@ function loadTable() {
 
 function displayRatingOptions(img){
 
-	
+	img.removeEventListener("click",imgOnClick,false);
+
 	var tdBody = img.parentElement;
 	
 	var like = document.createElement("button");
 	var cancel = document.createElement("button");
 
 	like.className = "likeButton";
-	like.value= "Like";
-	like.onclick = function(likeButton) {
+	like.innerHTML = "Like";
+	like.onclick = function() {
 		
 		addToList(sessionStorage.getItem('username'),this);
+		location.reload();
+
 	};
 
 	cancel.className = "cancelButton";
-	cancel.value = "Cancel";
+	cancel.innerHTML = "Cancel";
+	cancel.onclick = cancelOnClick;
 
 	tdBody.appendChild(like);
 	tdBody.appendChild(cancel);
@@ -90,6 +98,7 @@ function addToList(userName,likeButton){
 
 	var tdBody = likeButton.parentElement;
 	var img = tdBody.childNodes[0];
+	console.log(movieRecommendations[img.id].id);
 	var msID = movieRecommendations[img.id].id;
 
 	mode = "addList";
@@ -122,14 +131,14 @@ function requestMovieData(movieID){
 		xhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200){
 				movieRecommendations.push(JSON.parse(this.responseText));
-			
+				
 				
 		    }
 		};
 		xhttp.open("GET", " https://api.themoviedb.org/3/movie/"+movieID+"?api_key=dd22d79895a99a359091ab7ceb24287d&language=en-US", false);
 		xhttp.send();
 }
-
+/*
 function requestRecommendedMovies(movieID){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -156,7 +165,7 @@ function requestTopRatedMovies(){
 		xhttp.send();
 }
 
-
+*/
 function getRecommendations(params, url) {
 	
 	var xmlhttp = new XMLHttpRequest();
@@ -166,25 +175,18 @@ function getRecommendations(params, url) {
 	xmlhttp.onreadystatechange = function () {
 		if(this.readyState == 4 && this.status == 200){
 
-			console.log(this.responseText);
+			console.log(JSON.parse(this.responseText));
 			var movies = JSON.parse(this.responseText);
 		
-			if(movies.length <= 0){	
-				requestTopRatedMovies();
-
-			}
-			else{
-				Object.keys(movies).forEach(function(movie){
+			
+				movies.forEach(function(movie){
 					requestMovieData(movie);
 				});		
-				requestRecommendedMovies(movies[Math.floor(Math.random()*movies.length - 1)]);
+				
 
-			}
 			
 			loadTable();
 			
-		}else{
-			console.log(this.responseText);
 		}
 
 	}

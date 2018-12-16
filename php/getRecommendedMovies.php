@@ -1,6 +1,6 @@
 <?php
 
-	 $threshold_low = 1;
+	 $threshold_low = 10;
 	 $threshold_high = 95;
 
 	 $conn = new PDO("mysql:dbname=yoes9965;host=127.0.0.1","yoes9965","23299965");
@@ -58,7 +58,7 @@ $nearest_users = array();
 
 		
 
-		if( ($like_main > $threshold_low and $like_main < $threshold_high) and ($like_other > $threshold_low and $like_other < $threshold_high)) {
+		if( $like_main > $threshold_low) {
 			array_push($nearest_users, $users[$i]);
 		}
 	}
@@ -80,17 +80,16 @@ $nearest_users = array();
 			}
 
 	   }
-	   
-
-	   asort($rec_movies_count);
 
 	   
 	   $temp = array_keys($rec_movies_count);
 
 	   $rec_movies = array();
+	   $usedIndexes = array();
 
-	   foreach($temp as $key => $value){
-	   			array_push($rec_movies, $temp[$key]);
+	   foreach ($temp as $key => $value) {
+
+	   		array_push($rec_movies, $temp[$key]);
 	   }
 
 
