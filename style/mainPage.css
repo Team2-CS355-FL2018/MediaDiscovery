@@ -1243,7 +1243,7 @@ legend {
   position:static;
   display:inline-block;
   
-  width:10%;
+  width:192px;
   height:94px;
    -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -1262,7 +1262,7 @@ legend {
   position:absolute;
   font-size: 30px;
   color:black;
-  width:10%;
+  width:194px;
   height:94px;
   text-align:center;
   padding-top:20px;

@@ -11,15 +11,18 @@ window.onload = function () {
 
 function loadTable() {
 	
-	console.log(topMovieDetails);
-	for(var i = 0; movieRecommendations.length < 30; i++){
+	
+
+	for(var i = 0; i < topMovieDetails.results.length ; i++){
 		
+
 		movieRecommendations.push(topMovieDetails.results[i]);
 	}
 
 	var table = document.getElementById("table");
 			
 	for(var i = 0; i < movieRecommendations.length; i++) {
+		
 		if(i%3 === 0)
 		 	var row = table.insertRow(table.rows.length);	
 
@@ -73,6 +76,7 @@ function requestRecommendedMovies(movieID){
 	xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200){
 			topMovieDetails = JSON.parse(this.responseText);
+			console.log(topMovieDetails);
 	    }
 	};
 	xhttp.open("GET", "https://api.themoviedb.org/3/movie/"+movieID+"/recommendations?api_key=dd22d79895a99a359091ab7ceb24287d&language=en-US&page=1", false);
@@ -86,6 +90,7 @@ function requestTopRatedMovies(){
 		xhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200){
 				topMovieDetails = JSON.parse(this.responseText);
+				console.log(topMovieDetails);
 		    }
 		};
 		xhttp.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=dd22d79895a99a359091ab7ceb24287d&language=en-US&page=1", false);
@@ -104,14 +109,18 @@ function getRecommendations(params, url) {
 
 			console.log(this.responseText);
 			var movies = JSON.parse(this.responseText);
-			Object.keys(movies).forEach(function(movie){
-				requestMovieData(movie);
-			});		
-			if(movies.length < 0)	
+		
+			if(movies.length <= 0){	
 				requestTopRatedMovies();
-			
-			else
+
+			}
+			else{
+				Object.keys(movies).forEach(function(movie){
+					requestMovieData(movie);
+				});		
 				requestRecommendedMovies(movies[Math.floor(Math.random()*movies.length - 1)]);
+
+			}
 			
 			loadTable();
 			

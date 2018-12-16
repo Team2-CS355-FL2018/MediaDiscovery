@@ -1,6 +1,6 @@
 <?php
 
-	 $threshold_low = 0;
+	 $threshold_low = 1;
 	 $threshold_high = 95;
 
 	 $conn = new PDO("mysql:dbname=yoes9965;host=127.0.0.1","yoes9965","23299965");
