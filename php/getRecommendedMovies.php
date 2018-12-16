@@ -33,6 +33,7 @@
        
         }
 
+$nearest_users = array();
 	
 	for ($i = 0; $i < sizeof($users); $i++) {
 	
@@ -55,7 +56,7 @@
 		$like_main = (($similarity_count/count($main_user_movies))*100);
 		$like_other = ($similarity_count/count($user_movie))*100;
 
-		$nearest_users = array();
+		
 
 		if( ($like_main > $threshold_low and $like_main < $threshold_high) and ($like_other > $threshold_low and $like_other < $threshold_high)) {
 			array_push($nearest_users, $users[$i]);

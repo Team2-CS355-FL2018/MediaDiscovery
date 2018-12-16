@@ -1,8 +1,12 @@
 var movieRecommendations = [];
 var topMovieDetails = [];
+var imgOnClick = function(img) {
+	displayRatingOptions(this);
+	this.removeEventListener("click",imgOnClick,true);
+};
 
 
-window.onload = function () {
+window.onload = function (img) {
 
 	getMovies();
 }
@@ -20,7 +24,7 @@ function loadTable() {
 	}
 
 	var table = document.getElementById("table");
-			
+		
 	for(var i = 0; i < movieRecommendations.length; i++) {
 		
 		if(i%3 === 0)
@@ -30,16 +34,21 @@ function loadTable() {
 		 var tdHead = document.createElement('div');
 		 tdHead.className = "tdHead";
 		 var title = document.createTextNode(movieRecommendations[i].title)
+
+		 var tdBody = document.createElement('div');
+		 tdBody.className ="tdBody";
 		 var img = document.createElement('img');
+		 imgOnClick = img.addEventListener("click", imgOnClick); 
+		 img.id = i;
 		 
 		 if (movieRecommendations[i].poster_path != null)
 	    	img.src = "https://image.tmdb.org/t/p/w92" + movieRecommendations[i].poster_path;
 		 else img.src = "resources/None.png";
 		 
+		 tdBody.appendChild(img);
 		 tdHead.appendChild(title);
 		 td.appendChild(tdHead);
-		 td.appendChild(img);
-		 
+		 td.appendChild(tdBody);
 		 row.appendChild(td);
 		
 	}
@@ -48,6 +57,56 @@ function loadTable() {
 	
 }
 
+
+function displayRatingOptions(img){
+
+	
+	var tdBody = img.parentElement;
+	
+	var like = document.createElement("button");
+	var cancel = document.createElement("button");
+
+	like.className = "likeButton";
+	like.value= "Like";
+	like.onclick = function(likeButton) {
+		
+		addToList(sessionStorage.getItem('username'),this);
+	};
+
+	cancel.className = "cancelButton";
+	cancel.value = "Cancel";
+
+	tdBody.appendChild(like);
+	tdBody.appendChild(cancel);
+
+
+
+}
+
+
+
+function addToList(userName,likeButton){
+		
+
+	var tdBody = likeButton.parentElement;
+	var img = tdBody.childNodes[0];
+	var msID = movieRecommendations[img.id].id;
+
+	mode = "addList";
+	var xhttp = new XMLHttpRequest();
+	var url = "php/Users.php";
+	var params = "mode=" + mode + "&u=" + userName + "&msID=" + msID + "&msN=" + "msName" + "&msY=" + "msYear" + "&msO=" + "msOverview" + "&msR=" + 10;
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200){
+			
+	    }else{
+	    	console.log(this.responseText)    ;
+	    }
+	};
+	xhttp.open("POST", url, false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send(params);
+}
 
 function getMovies(){
 
