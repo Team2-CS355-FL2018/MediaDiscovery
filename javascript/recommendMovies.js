@@ -111,7 +111,7 @@ function getRecommendations(params, url) {
 				requestTopRatedMovies();
 			
 			else
-				requestRecommendedMovies(Math.floor(Math.random()*movies.length - 1));
+				requestRecommendedMovies(movies[Math.floor(Math.random()*movies.length - 1)]);
 			
 			loadTable();
 			
