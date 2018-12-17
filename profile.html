@@ -1,0 +1,232 @@
+<html>
+
+<head>
+  <link rel = "stylesheet" href = "style/profile.css" />
+  <link rel = "stylesheet" href = "style/changePassword.css" />
+  <head>
+    <body>
+      <div class = "backImage">
+        <img src = "Logo1.png">
+
+        <div>
+          <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
+            <button class="tablinks" onclick="openTab(event, 'myList')">My List</button>
+            <button class="tablinks" onclick="openTab(event, 'changePass')">Change Password</button>
+            <button class="tablinks" onclick="openTab(event, 'recommendations')"> Recommendations </button>
+          </div>
+
+        </div>
+
+        <div id="Home" class="tabcontent"> </div>
+
+
+        <div id="myList" class="tabcontent">
+          <table id = "myTable">
+            <tr>
+              <th> Title </th>
+              <th> Year </th>
+              <th> Rating </th>
+            </tr>
+
+          </table>
+        </div>
+
+        <div id="changePass" class="tabcontent">
+          <div class="container">
+      			<form id="changeP" action = "mainPage.html" onsubmit = "return verify()">
+      				<h3>Change Password</h3>
+      				<fieldset>
+      					<input id = "oldPass" placeholder="Old Password" type="password" tabindex="1" required autofocus>
+      				</fieldset>
+      				<fieldset>
+      					<input id = "newPass" placeholder="New Password" type="password" tabindex="1" required autofocus>
+      				</fieldset>
+      				<fieldset>
+      					<input id = "newPassConfirm" placeholder="Confirm New Password" type="password" tabindex="1" required autofocus>
+      				</fieldset>
+      				<fieldset>
+      					<button id="changeButton" type = "submit" > Submit </button>
+      				</fieldset>
+
+      			</form>
+      		</div>
+        </div>
+
+        <div id="recommendations" class="tabcontent"> </div>
+
+      </div>
+
+
+      <script>
+      var dataSize;
+      var myData;
+      var table = document.getElementById("myTable");
+      var isPass;
+    	var check;
+
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace("active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+
+        switch(tabName){
+          case "myList":
+            if (table.rows.length == 1) displayItems();
+            break;
+
+          case "changePass":
+            emptyTable();
+            break;
+
+          case "Home":
+            emptyTable();
+            window.location.href = "mainPage.html";
+            break;
+
+          case "recommendations":
+            emptyTable();
+            window.location.href = "https://venus.cs.qc.cuny.edu/~siry5150/userRecommendations.html";
+            break;
+
+        }
+      }
+
+      function displayItems(){
+        getItemsFromDatabase();
+
+        var fields = ["FavName", "FavYear", "FavRating"];
+
+        for (var r = 0; r < dataSize; r++){
+          var row = document.createElement("tr");
+
+          for (var c = 0; c < fields.length; c++){
+            var col = document.createElement("td");
+
+            var textNode = myData[r][fields[c]];
+            col.append(textNode);
+            row.append(col);
+          }
+          table.appendChild(row);
+        }
+      }
+
+      function getItemsFromDatabase(){
+
+        var mode = "getAll"
+        var user = sessionStorage.getItem("username");
+
+        var xhttp = new XMLHttpRequest();
+        var params = "mode=" + mode + "&u=" + user;
+
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200){
+
+            var String1 = "0 results";
+		        var result = String1.localeCompare(this.responseText);
+		        if (result != 0){
+
+              var myArray = this.responseText;
+              myData = JSON.parse(myArray);
+              dataSize = myData.length;
+
+            }
+          }
+        };
+
+        xhttp.open("POST", "Users.php", false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(params);
+      }
+
+      function emptyTable(){
+        for(var i = table.rows.length - 1; i > 0; i--){
+          table.deleteRow(i);
+        }
+      }
+
+      function verify(){
+
+    		var user = sessionStorage.getItem("username");
+    		var oldPass = document.getElementById("oldPass").value;
+    		var newPass = document.getElementById("newPass").value;
+    		var newPassConfirm = document.getElementById("newPassConfirm").value;
+
+    		checkOldPass(user, oldPass);
+
+    		if (isPass == false){
+    			alert('Wrong Password');
+    			emptyPasswords();
+    			return false;
+    		}
+
+    		if (newPass != newPassConfirm){
+    			alert("Passwords Don't Match ");
+    			emptyPasswords();
+    			return false;
+    		}
+
+    		changePassword(user, oldPass, newPass, newPassConfirm);
+    		alert('Password Changed Successfully');
+    		return true;
+    	}
+
+    	function emptyPasswords(){
+    		document.getElementById("oldPass").value = "";
+    		document.getElementById("newPass").value = "";
+    		document.getElementById("newPassConfirm").value = "";
+    	}
+
+    	function checkOldPass(user, oldPass){
+    		mode = "checkOldPass";
+
+    		var xhttp = new XMLHttpRequest();
+    		var url = "changePassword.php";
+    		var params = "mode=" + mode + "&u=" + user + "&p=" + oldPass;
+
+    		xhttp.onreadystatechange = function() {
+    			if (this.readyState == 4 && this.status == 200){
+    				var String1 = "Correct Password";
+
+    				var result = String1.localeCompare(this.responseText);
+    				if (result == 0){
+    					isPass = true;
+    				}
+    				else isPass = false;
+    			}
+    		};
+
+    		xhttp.open("POST", url, false);
+    		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    		xhttp.send(params);
+    	}
+
+    	function changePassword(user, pass, newPass, newPassConfirm){
+    		mode = "changePass";
+
+    		var xhttp = new XMLHttpRequest();
+    		var url = "changePassword.php";
+    		var params = "mode=" + mode + "&u=" + user + "&p=" + pass+ "&nP=" + newPass + "&nPC=" + newPassConfirm;
+
+    		xhttp.onreadystatechange = function() {
+    			if (this.readyState == 4 && this.status == 200){
+    				// Do Nothing
+    			}
+    		};
+
+    		xhttp.open("POST", url, false);
+    		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    		xhttp.send(params);
+    	}
+
+      </script>
+    </body>
+    </html>

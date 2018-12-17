@@ -1,0 +1,74 @@
+/* Style the tab */
+html, body{
+  margin: 0;
+  padding: 0;
+}
+
+.backImage {
+  background-image: url("Cinema.jpg");
+  background-color: #cccccc;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: auto;
+}
+
+.tab {
+  overflow: hidden;
+  background-color: #2d272700;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 20px;
+  color: white;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: green;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: green;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+
+  border-top: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: center;
+  border-width:5px;
+  border-style:groove;
+  border-color: green;
+  background-color: white;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
