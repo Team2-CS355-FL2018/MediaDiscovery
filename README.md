@@ -9,7 +9,7 @@ We are aiming to create a platform for users to discover movies through recommen
 # To Do List
 - [x] Create Github Organization and Repo
 
-- [ ] make design mock ups for login/signup, profile, and discovery pages
+- [x] make design mock ups for login/signup, profile, and discovery pages
 
 - [ ] design how the recommendation model is going to work
 
